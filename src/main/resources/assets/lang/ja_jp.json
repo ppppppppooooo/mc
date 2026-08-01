@@ -1,1 +1,11 @@
+{
+  "itemGroup.glasscity": "Glass City",
 
+  "glasscity.name": "Glass City Generator",
+
+  "glasscity.selection.pos1": "始点を設定しました",
+
+  "glasscity.selection.pos2": "終点を設定しました",
+
+  "glasscity.selection.cleared": "範囲選択を解除しました"
+}

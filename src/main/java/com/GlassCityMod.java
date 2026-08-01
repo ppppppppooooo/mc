@@ -29,22 +29,16 @@ public final class GlassCityMod implements ModInitializer {
         return INSTANCE;
     }
 
+    private SelectionManager selectionManager;
+private SelectionEvents selectionEvents;
+
     @Override
     public void onInitialize() {
-
-        LOGGER.info("==================================");
-        LOGGER.info(" Glass City Generator");
-        LOGGER.info(" Version : 0.1.0");
-        LOGGER.info(" Minecraft : 1.20.4");
-        LOGGER.info("==================================");
-
         selectionManager = new SelectionManager();
 
-        registerManagers();
+selectionEvents = new SelectionEvents(selectionManager);
 
-        registerEvents();
-
-        LOGGER.info("Glass City Generator Loaded.");
+selectionEvents.register();
     }
 
     /**

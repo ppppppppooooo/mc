@@ -35,6 +35,8 @@ dependencies {
 
     annotationProcessor "net.fabricmc:fabric-loader:${project.loader_version}"
 
+    modImplementation("com.terraformersmc:modmenu:9.2.0")
+
 }
 }
 

@@ -1,1 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "glasscity",
+  "version": "${version}",
 
+  "name": "Glass City Generator",
+
+  "description": "A modern city generator for Minecraft Java Edition.",
+
+  "authors": [
+    "ppppppppooooo",
+    "OpenAI"
+  ],
+
+  "contact": {
+    "homepage": "https://github.com/ppppppppooooo/mc",
+    "sources": "https://github.com/ppppppppooooo/mc"
+  },
+
+  "license": "MIT",
+
+  "icon": "assets/glasscity/icon.png",
+
+  "environment": "*",
+
+  "entrypoints": {
+    "main": [
+      "com.glasscity.GlassCityMod"
+    ]
+  },
+
+  "mixins": [
+    "glasscity.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.15.3",
+    "minecraft": "1.20.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+
+  "suggests": {
+    "modmenu": "*"
+  }
+}

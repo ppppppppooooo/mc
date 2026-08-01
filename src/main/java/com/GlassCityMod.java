@@ -1,102 +1,66 @@
-package com.glasscity.selection;
+package com.glasscity;
 
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.item.Items;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.fabricmc.api.ModInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public final class SelectionEvents {
+public final class GlassCityMod implements ModInitializer {
 
-    private final SelectionManager manager;
+    public static final String MOD_ID = "glasscity";
 
-    public SelectionEvents(SelectionManager manager) {
-        this.manager = manager;
+    public static final Logger LOGGER =
+            LoggerFactory.getLogger(MOD_ID);
+
+    
+    private static SelectionManager selectionManager;
+    
+    private static GlassCityMod INSTANCE;
+
+    public GlassCityMod() {
+        INSTANCE = this;
     }
 
-    public void register() {
-
-        /*
-         * 左クリック
-         */
-        AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
-
-            if (world.isClient()) {
-                return ActionResult.PASS;
-            }
-
-            if (!(player instanceof ServerPlayerEntity serverPlayer)) {
-                return ActionResult.PASS;
-            }
-
-            if (hand != Hand.MAIN_HAND) {
-                return ActionResult.PASS;
-            }
-
-            if (!player.getMainHandStack().isOf(Items.DIAMOND_AXE)) {
-                return ActionResult.PASS;
-            }
-
-            manager.setPos1(serverPlayer, pos);
-
-            player.sendMessage(
-                    Text.literal(
-                            String.format(
-                                    "§aPosition 1 set (§e%d§a, §e%d§a, §e%d§a)",
-                                    pos.getX(),
-                                    pos.getY(),
-                                    pos.getZ()
-                            )
-                    ),
-                    false
-            );
-
-            return ActionResult.FAIL;
-        });
-
-        /*
-         * 右クリック
-         */
-        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-
-            if (world.isClient()) {
-                return ActionResult.PASS;
-            }
-
-            if (!(player instanceof ServerPlayerEntity serverPlayer)) {
-                return ActionResult.PASS;
-            }
-
-            if (hand != Hand.MAIN_HAND) {
-                return ActionResult.PASS;
-            }
-
-            if (!player.getMainHandStack().isOf(Items.DIAMOND_AXE)) {
-                return ActionResult.PASS;
-            }
-
-            BlockHitResult hit = hitResult;
-
-            manager.setPos2(serverPlayer, hit.getBlockPos());
-
-            player.sendMessage(
-                    Text.literal(
-                            String.format(
-                                    "§aPosition 2 set (§e%d§a, §e%d§a, §e%d§a)",
-                                    hit.getBlockPos().getX(),
-                                    hit.getBlockPos().getY(),
-                                    hit.getBlockPos().getZ()
-                            )
-                    ),
-                    false
-            );
-
-            return ActionResult.SUCCESS;
-        });
-
-    }
-
+    
+    public static SelectionManager getSelectionManager() {
+    return selectionManager;
 }
+    
+    public static GlassCityMod getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    public void onInitialize() {
+
+        LOGGER.info("==================================");
+        LOGGER.info(" Glass City Generator");
+        LOGGER.info(" Version : 0.1.0");
+        LOGGER.info(" Minecraft : 1.20.4");
+        LOGGER.info("==================================");
+
+        selectionManager = new SelectionManager();
+
+        registerManagers();
+
+        registerEvents();
+
+        LOGGER.info("Glass City Generator Loaded.");
+    }
+
+    /**
+     * マネージャの生成
+     */
+    private void registerManagers() {
+
+        LOGGER.info("Loading managers...");
+
+        // v0.2.0
+        // SelectionManager
+
+        // v0.3.0
+        // ConfigManager
+
+        // v0.4.0
+        // CityGenerator
+
+    }

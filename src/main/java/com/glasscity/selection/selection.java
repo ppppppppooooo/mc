@@ -1,6 +1,6 @@
 package com.glasscity.selection;
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * プレイヤーが選択した範囲を保持するクラス

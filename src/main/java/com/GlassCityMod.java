@@ -1,65 +1,66 @@
 package com.glasscity;
 
-import com.glasscity.selection.SelectionEvents;
-import com.glasscity.selection.SelectionManager;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Glass City Generator
- *
- * Fabric 1.20.4
- */
-public class GlassCityMod implements ModInitializer {
+public final class GlassCityMod implements ModInitializer {
 
     public static final String MOD_ID = "glasscity";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    private static GlassCityMod instance;
+    public static final Logger LOGGER =
+            LoggerFactory.getLogger(MOD_ID);
 
-    private SelectionManager selectionManager;
+    
+    private static SelectionManager selectionManager;
+    
+    private static GlassCityMod INSTANCE;
 
     public GlassCityMod() {
-        instance = this;
+        INSTANCE = this;
+    }
+
+    
+    public static SelectionManager getSelectionManager() {
+    return selectionManager;
+}
+    
+    public static GlassCityMod getInstance() {
+        return INSTANCE;
     }
 
     @Override
     public void onInitialize() {
 
-        LOGGER.info("======================================");
-        LOGGER.info(" Glass City Generator Initializing...");
+        LOGGER.info("==================================");
+        LOGGER.info(" Glass City Generator");
+        LOGGER.info(" Version : 0.1.0");
         LOGGER.info(" Minecraft : 1.20.4");
-        LOGGER.info(" Fabric    : Loaded");
-        LOGGER.info("======================================");
+        LOGGER.info("==================================");
 
-        /*
-         * Managers
-         */
         selectionManager = new SelectionManager();
 
-        /*
-         * Register Events
-         */
-        SelectionEvents.register(selectionManager);
+        registerManagers();
 
-        LOGGER.info("Selection system loaded.");
+        registerEvents();
 
-        LOGGER.info("Glass City Generator initialized successfully.");
+        LOGGER.info("Glass City Generator Loaded.");
     }
 
     /**
-     * Singleton instance
+     * マネージャの生成
      */
-    public static GlassCityMod getInstance() {
-        return instance;
-    }
+    private void registerManagers() {
 
-    /**
-     * Global SelectionManager
-     */
-    public SelectionManager getSelectionManager() {
-        return selectionManager;
-    }
+        LOGGER.info("Loading managers...");
 
-}
+        // v0.2.0
+        // SelectionManager
+
+        // v0.3.0
+        // ConfigManager
+
+        // v0.4.0
+        // CityGenerator
+
+    }

@@ -1,1 +1,11 @@
+{
+  "itemGroup.glasscity": "Glass City",
 
+  "glasscity.name": "Glass City Generator",
+
+  "glasscity.selection.pos1": "Position 1 set",
+
+  "glasscity.selection.pos2": "Position 2 set",
+
+  "glasscity.selection.cleared": "Selection cleared"
+}

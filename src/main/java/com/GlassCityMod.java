@@ -1,77 +1,101 @@
-package com.glasscity;
+package com.glasscity.selection;
 
-import net.fabricmc.api.ModInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 
-public final class GlassCityMod implements ModInitializer {
+public final class SelectionEvents {
 
-    public static final String MOD_ID = "glasscity";
+    private final SelectionManager manager;
 
-    public static final Logger LOGGER =
-            LoggerFactory.getLogger(MOD_ID);
-    
-    private static SelectionManager selectionManager;
-    
-    private static GlassCityMod INSTANCE;
-
-    public GlassCityMod() {
-        INSTANCE = this;
-    }
-    
-    public static SelectionManager getSelectionManager() {
-    return selectionManager;
-}
-    
-    public static GlassCityMod getInstance() {
-        return INSTANCE;
+    public SelectionEvents(SelectionManager manager) {
+        this.manager = manager;
     }
 
-    @Override
-    public void onInitialize() {
+    public void register() {
 
-        LOGGER.info("==================================");
-        LOGGER.info(" Glass City Generator");
-        LOGGER.info(" Version : 0.1.0");
-        LOGGER.info(" Minecraft : 1.20.4");
-        LOGGER.info("==================================");
+        /*
+         * 左クリック
+         */
+        AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
 
-        selectionManager = new SelectionManager();
+            if (world.isClient()) {
+                return ActionResult.PASS;
+            }
 
-        registerManagers();
+            if (!(player instanceof ServerPlayerEntity serverPlayer)) {
+                return ActionResult.PASS;
+            }
 
-        registerEvents();
+            if (hand != Hand.MAIN_HAND) {
+                return ActionResult.PASS;
+            }
 
-        LOGGER.info("Glass City Generator Loaded.");
-    }
+            if (!player.getMainHandStack().isOf(Items.DIAMOND_AXE)) {
+                return ActionResult.PASS;
+            }
 
-    /**
-     * マネージャの生成
-     */
-    private void registerManagers() {
+            manager.setPos1(serverPlayer, pos);
 
-        LOGGER.info("Loading managers...");
+            player.sendMessage(
+                    Text.literal(
+                            String.format(
+                                    "§aPosition 1 set (§e%d§a, §e%d§a, §e%d§a)",
+                                    pos.getX(),
+                                    pos.getY(),
+                                    pos.getZ()
+                            )
+                    ),
+                    false
+            );
 
-        // v0.2.0
-        // SelectionManager
+            return ActionResult.FAIL;
+        });
 
-        // v0.3.0
-        // ConfigManager
+        /*
+         * 右クリック
+         */
+        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 
-        // v0.4.0
-        // CityGenerator
+            if (world.isClient()) {
+                return ActionResult.PASS;
+            }
 
-    }
+            if (!(player instanceof ServerPlayerEntity serverPlayer)) {
+                return ActionResult.PASS;
+            }
 
-    /**
-     * Event登録
-     */
-    private void registerEvents() {
+            if (hand != Hand.MAIN_HAND) {
+                return ActionResult.PASS;
+            }
 
-        LOGGER.info("Registering events...");
+            if (!player.getMainHandStack().isOf(Items.DIAMOND_AXE)) {
+                return ActionResult.PASS;
+            }
 
-        // v0.2.0
-        // SelectionEvents.register();
+            BlockHitResult hit = hitResult;
+
+            manager.setPos2(serverPlayer, hit.getBlockPos());
+
+            player.sendMessage(
+                    Text.literal(
+                            String.format(
+                                    "§aPosition 2 set (§e%d§a, §e%d§a, §e%d§a)",
+                                    hit.getBlockPos().getX(),
+                                    hit.getBlockPos().getY(),
+                                    hit.getBlockPos().getZ()
+                            )
+                    ),
+                    false
+            );
+
+            return ActionResult.SUCCESS;
+        });
 
     }
 

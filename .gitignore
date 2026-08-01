@@ -1,1 +1,25 @@
+# Gradle
+.gradle/
 
+build/
+
+out/
+
+run/
+
+# IntelliJ
+.idea/
+
+*.iml
+
+# VSCode
+.vscode/
+
+# Logs
+logs/
+
+*.log
+
+# OS
+Thumbs.db
+.DS_Store

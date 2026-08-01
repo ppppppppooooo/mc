@@ -10,13 +10,19 @@ public final class GlassCityMod implements ModInitializer {
 
     public static final Logger LOGGER =
             LoggerFactory.getLogger(MOD_ID);
-
+    
+    private static SelectionManager selectionManager;
+    
     private static GlassCityMod INSTANCE;
 
     public GlassCityMod() {
         INSTANCE = this;
     }
-
+    
+    public static SelectionManager getSelectionManager() {
+    return selectionManager;
+}
+    
     public static GlassCityMod getInstance() {
         return INSTANCE;
     }
@@ -29,6 +35,8 @@ public final class GlassCityMod implements ModInitializer {
         LOGGER.info(" Version : 0.1.0");
         LOGGER.info(" Minecraft : 1.20.4");
         LOGGER.info("==================================");
+
+        selectionManager = new SelectionManager();
 
         registerManagers();
 

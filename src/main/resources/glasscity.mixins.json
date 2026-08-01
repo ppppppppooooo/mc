@@ -1,1 +1,17 @@
+{
+  "required": false,
+  "package": "com.glasscity.mixin",
+  "compatibilityLevel": "JAVA_21",
 
+  "mixins": [
+
+  ],
+
+  "client": [
+
+  ],
+
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
